@@ -7,7 +7,7 @@ const storeTasks = (taskMap) => {
   localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(taskMap));
 };
 
-const readStoreTasks = () => {
+const readStoredTasks = () => {
   const tasksMap = JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY));
 
   return tasksMap ? tasksMap : { tasks: [], completedTasks: [] };
@@ -15,12 +15,12 @@ const readStoreTasks = () => {
 
 export default function Tasks() {
   const [taskText, setTaskText] = useState("");
-  const storedTasks = readStoreTasks();
-  const [tasks, setTasks] = useState([]);
-  const [completedTasks, setCompletedTasks] = useState([]);
+  const storedTasks = readStoredTasks();
+  const [tasks, setTasks] = useState(storedTasks.tasks);
+  const [completedTasks, setCompletedTasks] = useState(storedTasks.completedTasks);
 
   useEffect(() => {
-    storeTasks({ tasks, completedTasks });
+    storeTasks({tasks, completedTasks});
   });
 
   const updateTaskText = (event) => {
