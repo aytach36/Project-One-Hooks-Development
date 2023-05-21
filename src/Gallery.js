@@ -5,13 +5,18 @@ export default function Gallery() {
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
-        setInterval(() => {
+        const interval = setInterval(() => {
             setIndex(
                 storedIndex => {
                     return (storedIndex + 1) % PICTURES.length;
                 }
             )
         }, 3000);
+
+        return () => {
+            clearInterval(interval);
+        }
+
     }, []);
 
     return (
