@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (url, initialValue) => {
+export const useFetch = (url, initialValue) => {
     const [result, setResult] = useState(initialValue);
     useEffect(() => {
         fetch(url)
@@ -11,4 +11,22 @@ const useFetch = (url, initialValue) => {
     return result;
 };
 
-export { useFetch };
+export const useDynamicTransition = ({ increment, delay, length }) => {
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIndex(
+                storedIndex => {
+                    return (storedIndex + increment) % length;
+                }
+            )
+        }, delay);
+
+        return () => clearInterval(interval);
+
+    }, [delay, increment]);
+
+    return index;
+
+}
